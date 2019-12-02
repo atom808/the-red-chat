@@ -94,6 +94,50 @@ class _ChatScreenState extends State<ChatScreen> {
     return msg;
   }
 
+  _buildMessageComposer(){
+    return Container(
+      margin: EdgeInsets.all(10.0),
+/*      decoration: BoxDecoration(
+          borderRadius:
+          BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            bottomLeft: Radius.circular(30.0),
+          )
+      ),*/
+      padding: EdgeInsets.symmetric(
+        horizontal: 8.0,
+      ),
+      height: 70.0,
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          IconButton(
+              icon: Icon(Icons.attach_file),
+              iconSize: 25.0,
+              color: Colors.red,
+              onPressed: (){},
+          ),
+          Expanded(
+            child: TextField(
+              textCapitalization: TextCapitalization.sentences, //primeira letra maiúscula
+              decoration: InputDecoration(
+                hintText: "Type a message",
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.send),
+            iconSize: 25.0,
+            color: Colors.red,
+            onPressed: (){},
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,16 +186,18 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 child: ListView.builder(
                   reverse: true,
-                    physics: BouncingScrollPhysics(),
-                    itemCount: messages.length,
-                    itemBuilder: (BuildContext context, int index) {
+                  physics: BouncingScrollPhysics(),
+                  itemCount: messages.length,
+                  itemBuilder: (BuildContext context, int index) {
                       final Message message = messages[index];
                       final bool isMe = message.sender.id == currentUser.id;
                       return _buildMessage(message, isMe);
-                    }),
+                  }
+                ),
               ),
             ),
           ),
+          _buildMessageComposer(),
         ]
       ),
     );
